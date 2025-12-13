@@ -7,9 +7,12 @@ from django.utils import timezone
 from django.contrib.auth.hashers import make_password, check_password
 class PhoneOTP(models.Model):
     phone = models.CharField(max_length=15, unique=True)
-    otp = models.CharField(max_length=6)
+    otp = models.CharField(max_length=128)
     verified = models.BooleanField(default=False)
     role = models.CharField(max_length=20, default="user")  # "user" or "provider"
+    expires_at = models.DateTimeField(null=True, blank=True)
+    attempts = models.PositiveIntegerField(default=0)
+    last_sent_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Phone OTP"
