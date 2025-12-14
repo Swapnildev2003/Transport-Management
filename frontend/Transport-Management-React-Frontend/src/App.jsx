@@ -13,6 +13,7 @@ import UserRegisterForm from "./pages/UserAuth";
 import Onboarding from "./pages/Onboarding";
 import OperatorDashboard from "./pages/OperatorDashboard";
 import BookingForm from "./pages/UserBookingForm";
+import PersonalDetailsForm from "./components/PersonalDetailsForm";
 
 import TicketBookingPage from "./pages/TicketBooking"; // Add this import
 import "./App.css";
@@ -30,6 +31,7 @@ function AppRoutes() {
     location.pathname === "/user" ||
     location.pathname === "/operator-dashboard" ||
     location.pathname === "/user-booking" ||
+    location.pathname === "/personal_details" ||
     location.pathname === "/book"; // Add the booking route
 
   return (
@@ -44,6 +46,7 @@ function AppRoutes() {
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/operator" element={<ServiceProviderForm />} />
         <Route path="/user-booking" element={<BookingForm />} />
+        <Route path="/personal_details" element={<PersonalDetailsForm />} />
         <Route path="/bus-seats" element={<BusSeatSelectionPage />} />
         <Route path="/bus-results" element={<BusBooking />} />
          <Route path="/vehicle-results" element={<VehicleBooking />} />
