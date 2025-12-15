@@ -27,6 +27,7 @@ class PhoneOTP(models.Model):
 
 
 class PersonalDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='personal_details')
     full_name = models.CharField(max_length=100)
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
@@ -35,22 +36,32 @@ class PersonalDetails(models.Model):
     class Meta:
         verbose_name = "Personal Detail"
         verbose_name_plural = "Personal Details"
+        unique_together = [['user']]  # One record per user
+        indexes = [
+            models.Index(fields=['user']),  # Index for faster queries
+        ]
 
     def __str__(self):
         return f"{self.full_name}"
 
 class GSTDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='gst_details')
     gst_number = models.CharField(max_length=20)
     gst_certificate_url = models.URLField()
 
     class Meta:
         verbose_name = "GST Detail"
         verbose_name_plural = "GST Details"
+        unique_together = [['user']]  # One record per user
+        indexes = [
+            models.Index(fields=['user']),  # Index for faster queries
+        ]
 
     def __str__(self):
         return f"{self.gst_number}"
 
 class DocumentsUpload(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='documents')
     pan_card_url = models.URLField()
     aadhaar_card_url = models.URLField()
     supporting_documents_urls = models.URLField(blank=True, null=True)
@@ -58,11 +69,16 @@ class DocumentsUpload(models.Model):
     class Meta:
         verbose_name = "Document Upload"
         verbose_name_plural = "Document Uploads"
+        unique_together = [['user']]  # One record per user
+        indexes = [
+            models.Index(fields=['user']),  # Index for faster queries
+        ]
 
     def __str__(self):
         return f"{self.pan_card_url}"
 
 class BankDetails(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='bank_details')
     bank_name = models.CharField(max_length=100)
     branch_name = models.CharField(max_length=100)
     account_number = models.CharField(max_length=20)
@@ -71,6 +87,10 @@ class BankDetails(models.Model):
     class Meta:
         verbose_name = "Bank Detail"
         verbose_name_plural = "Bank Details"
+        unique_together = [['user']]  # One record per user
+        indexes = [
+            models.Index(fields=['user']),  # Index for faster queries
+        ]
 
     def __str__(self):
         return f"{self.bank_name}"
